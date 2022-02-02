@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/appbar_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/button_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/text_field_widget.dart';
 import 'package:validatorless/validatorless.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  final _nameEC = TextEditingController();
+  final _emailEC = TextEditingController();
+  final _passwordEC = TextEditingController();
+  final _confirmPasswordEC = TextEditingController();
+
   final formkey = GlobalKey<FormState>();
   bool validate() {
     final form = formkey.currentState;
@@ -35,25 +44,46 @@ class LoginPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Login',
+                      'Cadastro',
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 28,
                       ),
                     ),
                     SizedBox(
-                      height: 25,
+                      height: 8,
+                    ),
+                    Text(
+                      'Preencha os campos abaixo para criar o seu cadastro.',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     TextFieldWidget(
+                        controller: _nameEC,
+                        validator: Validatorless.multiple([
+                          Validatorless.required('Campo Obrigatório'),
+                        ]),
+                        label: 'Nome'),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextFieldWidget(
+                        controller: _emailEC,
                         validator: Validatorless.multiple([
                           Validatorless.email('Email inválido'),
                           Validatorless.required('Campo Obrigatório'),
                         ]),
                         label: 'E-mail'),
                     SizedBox(
-                      height: 45,
+                      height: 30,
                     ),
                     TextFieldWidget(
+                      controller: _passwordEC,
                       validator: Validatorless.multiple([
                         Validatorless.min(6, 'Minimo de 6 caracteres'),
                         Validatorless.required('Campo Obrigatório'),
@@ -62,34 +92,36 @@ class LoginPage extends StatelessWidget {
                       obscureText: true,
                     ),
                     SizedBox(
-                      height: 74,
+                      height: 30,
+                    ),
+                    TextFieldWidget(
+                      controller: _confirmPasswordEC,
+                      validator: Validatorless.multiple([
+                        Validatorless.compare(
+                            _passwordEC, 'Senhas não são iguais'),
+                        Validatorless.min(6, 'Minimo de 6 caracteres'),
+                        Validatorless.required('Campo Obrigatório'),
+                      ]),
+                      label: 'Confirmar Senha',
+                      obscureText: true,
+                    ),
+                    SizedBox(
+                      height: 50,
                     ),
                     Center(
                       child: ButtonWidget(
                         onPressed: () {
                           if (validate()) {
-                            //!Chamar API
+                            //!Chamar API para cadastrar
                           }
                         },
-                        text: 'ENTRAR',
+                        text: 'CADASTRAR',
                         width: double.infinity,
                       ),
                     ),
                     SizedBox(
                       height: 148,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Não possui conta?'),
-                        TextButton(
-                          onPressed: () {
-                            Get.toNamed('/auth/signUP');
-                          },
-                          child: Text('CADASTRE-SE'),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),

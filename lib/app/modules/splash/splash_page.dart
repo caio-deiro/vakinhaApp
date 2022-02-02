@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/appbar_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/button_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/text_field_widget.dart';
@@ -34,7 +35,9 @@ class SplashPage extends StatelessWidget {
                   Image.asset('assets/images/logo.png'),
                   SizedBox(height: 72),
                   ButtonWidget(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed('/auth/login');
+                    },
                     text: 'ACESSAR',
                     width: MediaQuery.of(context).size.width * .60,
                     height: 35,
