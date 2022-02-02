@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vakinha_burguer_mobile/app/modules/auth/signUP/signUP_controller.dart';
+import 'package:vakinha_burguer_mobile/app/shared/UI/vakinha_state.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/appbar_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/button_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/text_field_widget.dart';
@@ -11,11 +14,18 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends VakinhaState<SignupPage, SignupController> {
   final _nameEC = TextEditingController();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
-  final _confirmPasswordEC = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailEC.dispose();
+    _passwordEC.dispose();
+    _nameEC.dispose();
+    super.dispose();
+  }
 
   final formkey = GlobalKey<FormState>();
   bool validate() {
@@ -95,11 +105,9 @@ class _SignupPageState extends State<SignupPage> {
                       height: 30,
                     ),
                     TextFieldWidget(
-                      controller: _confirmPasswordEC,
                       validator: Validatorless.multiple([
                         Validatorless.compare(
                             _passwordEC, 'Senhas não são iguais'),
-                        Validatorless.min(6, 'Minimo de 6 caracteres'),
                         Validatorless.required('Campo Obrigatório'),
                       ]),
                       label: 'Confirmar Senha',
@@ -112,7 +120,10 @@ class _SignupPageState extends State<SignupPage> {
                       child: ButtonWidget(
                         onPressed: () {
                           if (validate()) {
-                            //!Chamar API para cadastrar
+                            controller.register(
+                                name: _nameEC.text,
+                                email: _emailEC.text,
+                                password: _passwordEC.text);
                           }
                         },
                         text: 'CADASTRAR',

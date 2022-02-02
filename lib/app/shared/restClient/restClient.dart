@@ -10,7 +10,7 @@ class Restclient extends GetConnect {
 
 class RestclientException implements Exception {
   final int? code;
-  final String? message;
+  final String message;
   RestclientException({
     this.code,
     required this.message,
