@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vakinha_burguer_mobile/app/modules/splash/splash_controller.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/appbar_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/button_widget.dart';
 import 'package:vakinha_burguer_mobile/app/shared/UI/widgets/text_field_widget.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends GetView<SplashController> {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
@@ -36,7 +37,7 @@ class SplashPage extends StatelessWidget {
                   SizedBox(height: 72),
                   ButtonWidget(
                     onPressed: () {
-                      Get.toNamed('/auth/login');
+                      controller.checkLoggged();
                     },
                     text: 'ACESSAR',
                     width: MediaQuery.of(context).size.width * .60,
